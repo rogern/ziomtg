@@ -1,9 +1,9 @@
 package se.rogern.ziomtg.module
 
-import zio.{Chunk, Layer, TaskLayer, ZIO, ZManaged}
 import zio.blocking.Blocking
 import zio.json.JsonDecoder
-import zio.stream.{Stream, Transducer, ZStream, ZTransducer}
+import zio.stream.{Stream, Transducer, ZTransducer}
+import zio.{Chunk, TaskLayer, ZIO, ZManaged}
 
 import java.io.IOException
 import java.net.URL
