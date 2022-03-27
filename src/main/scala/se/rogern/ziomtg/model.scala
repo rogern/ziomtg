@@ -53,15 +53,15 @@ object ManaCost {
   def apply(mc: ManaColor*): ManaCost = ManaCost(mc.toList)
 
   implicit val d: JsonDecoder[Option[ManaCost]] = JsonDecoder.option[String].map {
-    case None | Some("")   => None
-    case ValidManaCost(mc) => Some(mc)
+    case None | Some("")         => None
+    case Some(ValidManaCost(mc)) => Some(mc)
   }
 
   object ValidManaCost {
     val manaCost: Regex = """(\d|\w)""".r
 
-    def unapply(y: Option[String]): Option[ManaCost] = {
-      manaCost.findAllMatchIn(y.get).toList match {
+    def unapply(y: String): Option[ManaCost] = {
+      manaCost.findAllMatchIn(y).toList match {
         case Nil  => None
         case list => Some(ManaCost(ManaColor.fromList(list.map(_.matched))))
       }

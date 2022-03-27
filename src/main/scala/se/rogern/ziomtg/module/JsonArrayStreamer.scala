@@ -6,7 +6,7 @@ import zio.stream.{Stream, Transducer, ZTransducer}
 import zio.{Chunk, TaskLayer, ZIO, ZManaged}
 
 import java.io.IOException
-import java.net.URL
+import java.net.URI
 
 /**
  * Parts of code taken from:
@@ -15,9 +15,9 @@ import java.net.URL
  * License provided in ´zio-json-license/LICENCE´
  */
 class JsonArrayStreamer(zioLayer: TaskLayer[Blocking]) {
-  def readJsonItem[A: JsonDecoder](url: URL): Stream[Throwable, A] = {
+  def readJsonItem[A: JsonDecoder](url: URI): Stream[Throwable, A] = {
     val managed = ZManaged
-      .fromAutoCloseable(ZIO.effect(url.openStream()))
+      .fromAutoCloseable(ZIO.effect(url.toURL.openStream()))
       .refineToOrDie[IOException]
 
     Stream
